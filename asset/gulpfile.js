@@ -4,7 +4,7 @@ const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const GetGoogleFonts = require('get-google-fonts');
 const {parallel, src, dest, watch} = require('gulp');
-const sass = require('gulp-sass')(require('node-sass'));
+const sass = require('gulp-dart-sass');
 const terser = require('gulp-terser');
 
 const prism = [
@@ -88,12 +88,13 @@ function js() {
                 'node_modules/bootstrap/dist/js/bootstrap.js',
                 'node_modules/anchor-js/anchor.js',
                 'node_modules/choices.js/public/assets/scripts/choices.js',
+                'node_modules/mermaid/dist/mermaid.min.js',
                 'js/component-list.js',
                 'js/base.js'
             ]
         )
     )
-        .pipe(babel({presets: ['@babel/env'], sourceType: 'unambiguous'}))
+        .pipe(babel({presets: ['@babel/env'], sourceType: 'unambiguous', compact: true}))
         .pipe(concat({path: 'scripts.js'}))
         .pipe(terser({mangle: false}).on('error', function (e) {
             console.log(e);
